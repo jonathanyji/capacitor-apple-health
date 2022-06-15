@@ -10,5 +10,6 @@ CAP_PLUGIN(HealthkitPlugin, "Healthkit",
            CAP_PLUGIN_METHOD(getWorkouts, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(getSleep, CAPPluginReturnPromise);
            CAP_PLUGIN_METHOD(getMenstrualFlow, CAPPluginReturnPromise);
+           CAP_PLUGIN_METHOD(isPermissionGranted, CAPPluginReturnPromise);
 )
 		

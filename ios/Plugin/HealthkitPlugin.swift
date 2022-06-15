@@ -45,7 +45,35 @@ public class HealthkitPlugin: CAPPlugin {
         }
     }
     
+    @objc func isPermissionGranted(_ call: CAPPluginCall){
+        
+        let isGrantedWorkout = functions.checkPermissionSet(call, HKObjectType.workoutType())
+        
+        let isGrantedSleep = functions.checkPermissionSet(call, HKObjectType.categoryType(forIdentifier: HKCategoryTypeIdentifier.sleepAnalysis)!)
+        
+        let isGrantedMenstruation = functions.checkPermissionSet(call, HKObjectType.categoryType(forIdentifier: HKCategoryTypeIdentifier.menstrualFlow)!)
+        
+        
+        if (isGrantedWorkout == "notDetermined" || isGrantedSleep == "notDetermined" || isGrantedMenstruation == "notDetermined"){
+            call.resolve(["isGranted": "notDetermined"])
+        } else if (isGrantedWorkout == "sharingDenied" || isGrantedSleep == "sharingDenied" || isGrantedMenstruation == "sharingDenied"){
+            call.resolve(["isGranted": "sharingDenied"])
+        } else if (isGrantedWorkout == "sharingAuthorized" || isGrantedSleep == "sharingAuthorized" || isGrantedMenstruation == "sharingAuthorized"){
+            call.resolve(["isGranted": "sharingAuthorized"])
+        } else {
+            call.reject("Error getting permission status")
+        }
+        
+    }
+    
     @objc func getWorkouts(_ call: CAPPluginCall){
+        
+        let isGranted = functions.checkPermissionSet(call, HKObjectType.workoutType())
+        
+        if (isGranted != "sharingAuthorized") {
+            call.reject("Permission not set")
+            return
+        }
         
         guard let _startDate = call.options["startDate"] as? String else {
             call.reject("Must provide startDate")
@@ -82,6 +110,13 @@ public class HealthkitPlugin: CAPPlugin {
     }
     
     @objc func getSleep(_ call: CAPPluginCall){
+        
+        let isGranted = functions.checkPermissionSet(call, HKObjectType.categoryType(forIdentifier: HKCategoryTypeIdentifier.sleepAnalysis)!)
+        
+        if (isGranted != "sharingAuthorized") {
+            call.reject("Permission not set")
+            return
+        }
         
         guard let _startDate = call.options["startDate"] as? String else {
             call.reject("Must provide startDate")
@@ -121,6 +156,13 @@ public class HealthkitPlugin: CAPPlugin {
     }
     
     @objc func getMenstrualFlow(_ call: CAPPluginCall){
+        
+        let isGranted = functions.checkPermissionSet(call, HKObjectType.categoryType(forIdentifier: HKCategoryTypeIdentifier.menstrualFlow)!)
+        
+        if (isGranted != "sharingAuthorized") {
+            call.reject("Permission not set")
+            return
+        }
         
         guard let _startDate = call.options["startDate"] as? String else {
             call.reject("Must provide startDate")

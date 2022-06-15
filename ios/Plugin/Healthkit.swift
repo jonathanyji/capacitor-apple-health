@@ -318,4 +318,14 @@ import HealthKit
         return (_startDate, _endDate)
     }
     
+    public func checkPermissionSet(_ call: CAPPluginCall, _ permissionType: HKObjectType) -> String{
+        if (healthStore.authorizationStatus(for: permissionType) == .notDetermined ) {
+            return "notDetermined"
+        } else if (healthStore.authorizationStatus(for: permissionType) == .sharingDenied ){
+            return "sharingDenied"
+        } else {
+            return "sharingAuthorized"
+        }
+    }
+    
 }

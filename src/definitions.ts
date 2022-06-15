@@ -8,4 +8,5 @@ export interface HealthkitPlugin {
   getWorkouts(results: any): Promise<{ result: string }>;
   getSleep(results: any): Promise<{ result: string }>;
   getMenstrualFlow(results: any): Promise<{ result: string }>;
+  isPermissionGranted(): Promise<{ isGranted: string }>;
 }
