@@ -23,7 +23,7 @@ npx cap sync
         "Privacy - Health Update Usage Description"
         Value: $HEALTH_WRITE_PERMISSION
 
-4. Go to Signing & Capabilities Healthkit tab
+4. Go to Signing & Capabilities Healthkit tab (Click plus to add HealthKit Tab)
     a) Tick "Clinical Health Records"
     b) Tick "Background Delivery"
     
