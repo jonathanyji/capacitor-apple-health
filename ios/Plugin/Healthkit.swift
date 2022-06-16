@@ -62,7 +62,8 @@ import HealthKit
             }
             
             output.append([
-                "uuid": sample.uuid.uuidString,
+                "deviceId": UIDevice.current.identifierForVendor!.uuidString,
+                "id": sample.uuid.uuidString,
                 "workoutActivityTypeID": sample.workoutActivityType.rawValue,
                 "workoutActivityName": returnWorkoutActivityTypeValueDictionnary(activityType: sample.workoutActivityType),
                 "startDate": ISO8601DateFormatter().string(from: sample.startDate),
@@ -89,7 +90,8 @@ import HealthKit
             let minutes = seconds/60
             
             output.append([
-                "uuid": sample.uuid.uuidString,
+                "deviceId": UIDevice.current.identifierForVendor!.uuidString,
+                "id": sample.uuid.uuidString,
                 "sleepType": value,
                 "minutes": minutes,
                 "startDate": ISO8601DateFormatter().string(from: sample.startDate),
@@ -112,7 +114,8 @@ import HealthKit
             }
             
             output.append([
-                "uuid": sample.uuid.uuidString,
+                "deviceId": UIDevice.current.identifierForVendor!.uuidString,
+                "id": sample.uuid.uuidString,
                 "flowType": returnMenstruationTypeValueDictionary(sample.value),
                 "startDate": ISO8601DateFormatter().string(from: sample.startDate),
                 "endDate": ISO8601DateFormatter().string(from: sample.endDate),
