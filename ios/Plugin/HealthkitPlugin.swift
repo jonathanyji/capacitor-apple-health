@@ -37,6 +37,16 @@ public class HealthkitPlugin: CAPPlugin {
                     
                 }
                 
+                let isGrantedWorkout = self.functions.checkPermissionSet(call, HKObjectType.workoutType())
+                
+                let isGrantedSleep = self.functions.checkPermissionSet(call, HKObjectType.categoryType(forIdentifier: HKCategoryTypeIdentifier.sleepAnalysis)!)
+                
+                let isGrantedMenstruation = self.functions.checkPermissionSet(call, HKObjectType.categoryType(forIdentifier: HKCategoryTypeIdentifier.menstrualFlow)!)
+                
+                if (isGrantedWorkout == "sharingDenied" || isGrantedSleep == "sharingDenied" || isGrantedMenstruation == "sharingDenied"){
+                    return call.resolve(["permission": false]);
+                }
+                
                 return call.resolve(["permission": true]);
             }
         }
